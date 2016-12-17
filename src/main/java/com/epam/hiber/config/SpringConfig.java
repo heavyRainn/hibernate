@@ -22,7 +22,7 @@ public class SpringConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/testdb123?createDatabaseIfNotExist=true");
         dataSource.setUsername("root");
-        dataSource.setPassword("12345veg");
+        dataSource.setPassword("p2503d");
 
         return dataSource;
     }
@@ -35,7 +35,8 @@ public class SpringConfig {
                 .scanPackages("com.epam.hiber.entity")
                 .setProperty("hibernate.hbm2ddl.auto", "update")
                 .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
-                .setProperty("hibernate.show_sql", "true");
+                .setProperty("hibernate.show_sql", "true")
+                .setProperty("hibernate.enable_lazy_load_no_trans", "true");
 
         return sessionBuilder.buildSessionFactory();
     }

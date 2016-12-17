@@ -8,7 +8,7 @@ import java.util.List;
 public class Stock {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "STC_ID", unique = true, nullable = false)
     private int id;
 
@@ -18,7 +18,7 @@ public class Stock {
     @Column(name = "STC_NAME")
     private String name;
 
-    @OneToMany(mappedBy = "stock",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
     private List<Item> items;
 
     public Stock() {

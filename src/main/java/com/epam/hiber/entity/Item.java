@@ -8,7 +8,7 @@ import java.util.Date;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ITM_ID", unique = true, nullable = false)
     private long id;
 
@@ -20,6 +20,7 @@ public class Item {
     private Date date;
 
     @ManyToOne
+    @JoinColumn(name = "STC_ID", nullable = true)
     private Stock stock;
 
     public Item() {

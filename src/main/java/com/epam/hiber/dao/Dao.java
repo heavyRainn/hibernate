@@ -2,7 +2,7 @@ package com.epam.hiber.dao;
 
 import com.epam.hiber.entity.Item;
 import com.epam.hiber.entity.Stock;
-import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,26 +19,30 @@ public class Dao {
     @Autowired
     SessionFactory sessionFactory;
 
+    public static final String EXTRACT_STOCKS = "from Stock s ";
+    public static final String EXTRACT_ITEMS = "from Item i ";
+
     public List<Stock> getStocks() {
         return (List<Stock>) sessionFactory.getCurrentSession()
-                .createCriteria(Stock.class)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                .createQuery(EXTRACT_STOCKS)
+                .list();
     }
 
-    public List<Stock> getItems() {
-        return (List<Stock>) sessionFactory.getCurrentSession()
-                .createCriteria(Item.class)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+    public List<Item> getItems() {
+        return (List<Item>) sessionFactory.getCurrentSession()
+                .createQuery(EXTRACT_ITEMS)
+                .list();
     }
 
     public void writeStock() {
+        Session session = sessionFactory.getCurrentSession();
         Item item = new Item();
         item.setName("MASERTA");
         item.setDate(new Date());
 
         Item item1 = new Item();
-        item.setName("BERGAT");
-        item.setDate(new Date());
+        item1.setName("BERGAT");
+        item1.setDate(new Date());
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -47,11 +51,13 @@ public class Dao {
         Stock stock = new Stock();
         stock.setName("SOVELENTO");
         stock.setCode("222%%%");
+
+        item.setStock(stock);
+        item1.setStock(stock);
+
         stock.setItems(items);
 
-        sessionFactory.getCurrentSession().persist(stock);
-        sessionFactory.getCurrentSession().persist(item);
-        sessionFactory.getCurrentSession().persist(item1);
+        session.save(stock);
 
         System.out.println("WRITED !!! ");
     }
