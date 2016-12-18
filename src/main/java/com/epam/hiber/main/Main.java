@@ -11,7 +11,7 @@ public class Main {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
         Dao dao = ctx.getBean(Dao.class);
 
-        dao.writeStock();
+       // dao.writeStock();
 
         System.out.println(dao.getStocks());
         System.out.println(dao.getItems());
